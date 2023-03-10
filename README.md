@@ -7,6 +7,6 @@
 
 #### Mediante distintos componentes tambien podemos calcular las unidades vendidas dependiendo del stock disponible hasta el momento. Les dejo un breve GIF del mismo:
 
-[alt text](./src/assets/AnimationGIF)
+![GIF](./src/assets/AnimationGIF.gif)
 
 ### **SALUDOS!**
