@@ -1,6 +1,6 @@
 import React from 'react';
 import CartWidget from './CartWidget';
-import {Container, Menu, MenuButton, MenuList, MenuItem, IconButton, Flex, Box, Spacer, Image} from '@chakra-ui/react';
+import {Container, Menu, MenuButton, MenuList, MenuItem, IconButton, Flex, Box, Spacer} from '@chakra-ui/react';
 import {HamburgerIcon} from '@chakra-ui/icons';
 import logo from '../assets/logo.png';
 import { Link } from "react-router-dom";
@@ -26,9 +26,9 @@ const NavBar = () => {
             </Box>
           </Link>
         <Spacer />
-        <Box>
+        <Link to={"/cart"}>
           <CartWidget/>
-        </Box>
+        </Link>
       </Flex>
     </Container>
   );

@@ -1,22 +1,57 @@
-import Data from "../data.json";
-import { Heading, Center } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import ItemList from "./ItemList";
-import { useParams } from "react-router-dom";
+import Waiting from "./Waiting"
+import { useParams, Link } from "react-router-dom";
 
 const ItemListContainer = () => {
+  const [products, setProducts] = useState([]);
   const { category } = useParams();
+  const [ Wait, setWait] = useState(true);
 
-  const catFilter = Data.filter((product) => product.category === category);
-  console.log(catFilter);
+  useEffect(() => {
+    const db = getFirestore();
+    const itemsCollection = collection(db, "guitars");
+    getDocs(itemsCollection).then((snapshot) => {
+      const docs = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setProducts(docs);
+      setWait(false);
+    });
+  }, []);
+
+  const Filter = products.filter(
+    (product) => product.category === category);
+  
+
+    function show() {
+      if (Wait) {
+        return <Waiting />;
+      } else {
+        return category ? (
+          <ItemList product={Filter} />
+        ) : (
+          <ItemList product={products} />
+        );
+      }
+    }
+
+  function link() {
+    if (category != null) {
+      return ('');
+    }};
 
   return (
     <div>
-      <Center h="100px" color="black">
-        <Heading as="h2" size="2xl">
-        { !category ? <h2>Catálogo</h2> : <h2>{`${category}`}</h2> }
-        </Heading>
-      </Center>
-        {category ? <ItemList product={catFilter} /> : <ItemList product={Data} /> }
+      {link()}
+      {{ category } ? (
+        <Link>{''}</Link>
+      ) : ( {} )}
+    <div>
+      {show()}
+    </div>
     </div>
   );
 };
